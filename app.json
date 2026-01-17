@@ -31,6 +31,12 @@
         "projectId": "28a86f55-625b-44c2-ad1c-25da5c537a95"
       }
     },
-    "owner": "zealaj"
+    "owner": "zealaj",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/28a86f55-625b-44c2-ad1c-25da5c537a95"
+    }
   }
 }

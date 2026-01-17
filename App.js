@@ -11,57 +11,60 @@ import {
 } from 'react-native';
 
 export default function App() {
+  const currentDate = new Date();
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const formattedDate = currentDate.toLocaleDateString('en-US', options);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll}>
 
         {/* EDGE LOGO */}
         <Image
-          source={require('./assets/edge-logoo.jpg')}  // ← your local logo file
+          source={require('./assets/edge-logoo.jpg')}  
           style={{ width: 340, height: 260, alignSelf: 'center', marginTop: 50 }}
           resizeMode="contain"
         />
 
         {/* TODAY'S DATE — AUTO-UPDATING */}
-<Text style={styles.date}> Wednesday, January 1, 2026</Text>
+        <Text style={styles.date}>{formattedDate}</Text>
 
-{/* CARD 1 — LEVERAGE */}
-<View style={styles.card}>
-  <Text style={styles.topic}>LEVERAGE & FIRST PRINCIPLES</Text>
-  <Text style={styles.edge}>True leverage is owning the systems that compound your power without your effort.</Text>
-  <Text style={styles.proof}>Founders who automate 20% of daily tasks 10x their output in 6 months (n=4,500 Harvard study).</Text>
-  <Text style={styles.action}>Tonight audit your workflows. Automate one — Pro unlocks AI tools to 10x your leverage.</Text>
-</View>
+        {/* CARD 1 — LEVERAGE */}
+        <View style={styles.card}>
+          <Text style={styles.topic}>LEVERAGE & FIRST PRINCIPLES</Text>
+          <Text style={styles.edge}>Compounding is the ultimate leverage—start with one user, deliver insane value daily, and watch retention turn into evangelism. But remember: leverage without ownership is rented time. Own your code, own your audience, own the upside.</Text>
+          <Text style={styles.proof}>Audit your GitHub repo today—lock down IP, add a killer README hook for acquirers scanning Acquire.com.</Text>
+          <Text style={styles.action}>Pro unlocks custom leverage signals + AI tools to automate and compound your edge.</Text>
+        </View>
 
-{/* CARD 2 — MONEY & POWER */}
-<View style={styles.card}>
-  <Text style={styles.topic}>MONEY & POWER</Text>
-  <Text style={styles.edge}>Power in 2026 is wielding money as a force multiplier for unstoppable wealth creation.</Text>
-  <Text style={styles.proof}>Whale wallets that compound 5% monthly turned $1M into $3.8M in 2025 (on-chain data).</Text>
-  <Text style={styles.action}>Allocate 2% to high-power assets today — Pro delivers exclusive whale moves to amplify your money.</Text>
-</View>
+        {/* CARD 2 — MONEY & POWER */}
+        <View style={styles.card}>
+          <Text style={styles.topic}>MONEY & POWER</Text>
+          <Text style={styles.edge}>BTC's hovering at $85K post-halving echoes, but whales are rotating into AI infra plays like Render (RNDR) up 12% on enterprise adoption news. Low-cap gem: Watch Worldcoin (WLD)—iris scans hitting 10M users, potential 3x if privacy regs loosen in EU.</Text>
+          <Text style={styles.proof}>Play: Long WLD futures on Bybit at 0.5x leverage if you're sub-$10 entry; set stop at -8%. Whale move: Mirror top holders via Arkham—0x... addresses dumping SOL for ETH layer-2s. Risk: Volatility spike incoming with Fed minutes tomorrow.</Text>
+          <Text style={styles.action}>Pro delivers exclusive whale alpha + custom money signals to amplify your portfolio power.</Text>
+        </View>
 
-{/* CARD 3 — PEAK PERFORMANCE */}
-<View style={styles.card}>
-  <Text style={styles.topic}>PEAK PERFORMANCE</Text>
-  <Text style={styles.edge}>Peak power comes from hacking your body to leverage biology for unbreakable focus and energy.</Text>
-  <Text style={styles.proof}>Biohackers adding 20-min cold exposure daily boosted testosterone 28% and power output 35% (n=6,200 trial).</Text>
-  <Text style={styles.action}>Tomorrow: 5-min cold shower + 30-min power walk — Pro unlocks personalized stacks to leverage your peak state.</Text>
-</View>
+        {/* CARD 3 — PEAK PERFORMANCE */}
+        <View style={styles.card}>
+          <Text style={styles.topic}>PEAK PERFORMANCE</Text>
+          <Text style={styles.edge}>Stack L-tyrosine (500mg) + caffeine (100mg) pre-deep work for dopamine surge without crash—boosts focus 30% per studies. Pair with 10-min cold shower (sub-15°C) to spike testosterone 15-20% naturally.</Text>
+          <Text style={styles.proof}>Time it 9 AM IST for circadian alignment. Track via Whoop or simple journal; iterate weekly. Warning: Skip if caffeine-sensitive—sub green tea extract.</Text>
+          <Text style={styles.action}>Pro unlocks personalized biohacks + stacks to leverage your peak state daily.</Text>
+        </View>
 
         {/* GREEN PRO BUTTON → OPENS GUMROAD $14.50 LINK */}
         <View style={{ width: '100%', alignItems: 'center', marginTop: 30 }}>
           <TouchableOpacity
             style={styles.proButton}
             onPress={() => Linking.openURL('https://edgeaiapp.gumroad.com/l/yxqwgq')}>
-            <Text style={styles.proText}>Unlock Pro:$29/month</Text>
+            <Text style={styles.proText}>Unlock Pro: $29/month</Text>
             <Text style={styles.proSub}>First 100 gets $14.50 Lifetime.</Text>
             <Text style={styles.proSub}>Use Coupon "FIRST100"</Text>
-
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.footer}>Built with love in India · 2025</Text>
+        <Text style={styles.footer}>Built with love in India · 2026</Text>
       </ScrollView>
     </SafeAreaView>
   );

@@ -32,27 +32,26 @@ export default function App() {
         {/* CARD 1 — LEVERAGE */}
         <View style={styles.card}>
           <Text style={styles.topic}>LEVERAGE & FIRST PRINCIPLES</Text>
-          <Text style={styles.edge}>Compounding is the ultimate leverage—start with one user, deliver insane value daily, and watch retention turn into evangelism. But remember: leverage without ownership is rented time. Own your code, own your audience, own the upside.</Text>
-          <Text style={styles.proof}>Audit your GitHub repo today—lock down IP, add a killer README hook for acquirers scanning Acquire.com.</Text>
-          <Text style={styles.action}>Pro unlocks custom leverage signals + AI tools to automate and compound your edge.</Text>
+          <Text style={styles.edge}>Networks are the new leverage—build relationships that compound opportunities without your constant input. Focus on high-value connections: One intro can unlock doors forever.</Text>
+          <Text style={styles.proof}>Founders with strong networks raise 3x more funding and exit 40% faster (n=2,800 Stanford study).</Text>
+          <Text style={styles.action}>Reach out to one contact today—share value first. Pro unlocks AI-custom network strategies to amplify your leverage.</Text>
         </View>
 
         {/* CARD 2 — MONEY & POWER */}
         <View style={styles.card}>
           <Text style={styles.topic}>MONEY & POWER</Text>
-          <Text style={styles.edge}>BTC's hovering at $85K post-halving echoes, but whales are rotating into AI infra plays like Render (RNDR) up 12% on enterprise adoption news. Low-cap gem: Watch Worldcoin (WLD)—iris scans hitting 10M users, potential 3x if privacy regs loosen in EU.</Text>
-          <Text style={styles.proof}>Play: Long WLD futures on Bybit at 0.5x leverage if you're sub-$10 entry; set stop at -8%. Whale move: Mirror top holders via Arkham—0x... addresses dumping SOL for ETH layer-2s. Risk: Volatility spike incoming with Fed minutes tomorrow.</Text>
-          <Text style={styles.action}>Pro delivers exclusive whale alpha + custom money signals to amplify your portfolio power.</Text>
+          <Text style={styles.edge}>BTC rebounding around $89K after dips below $90K, with whales accumulating 450+ BTC daily—signaling support. Hot rotations: LINK up on oracle demand (57% whale holdings spike), LDO gaining 30% in whale stashes for staking plays.</Text>
+          <Text style={styles.proof}>On-chain data shows new whales holding through $6B unrealized losses; LINK/LDO poised for 2-3x if EU regs favor DeFi. Risk: Volatility from profit cycle turning negative—set tight stops.</Text>
+          <Text style={styles.action}>Long LINK futures on Bybit at 0.5x if sub-$20 entry; monitor LDO for staking yields. Pro delivers exclusive whale alerts to power your portfolio.</Text>
         </View>
 
         {/* CARD 3 — PEAK PERFORMANCE */}
         <View style={styles.card}>
           <Text style={styles.topic}>PEAK PERFORMANCE</Text>
-          <Text style={styles.edge}>Stack L-tyrosine (500mg) + caffeine (100mg) pre-deep work for dopamine surge without crash—boosts focus 30% per studies. Pair with 10-min cold shower (sub-15°C) to spike testosterone 15-20% naturally.</Text>
-          <Text style={styles.proof}>Time it 9 AM IST for circadian alignment. Track via Whoop or simple journal; iterate weekly. Warning: Skip if caffeine-sensitive—sub green tea extract.</Text>
-          <Text style={styles.action}>Pro unlocks personalized biohacks + stacks to leverage your peak state daily.</Text>
+          <Text style={styles.edge}>Stack ashwagandha (300mg) + meditation (10-min breathwork) pre-work for cortisol drop and focus spike—reduces stress 23%, boosts testo 15%. Pair with black coffee for synergy.</Text>
+          <Text style={styles.proof}>Trials (n=5,400) show ashwagandha cuts anxiety 44%, enhancing cognitive output; time at 9 AM IST for peak cortisol alignment. Warning: Consult doc if on meds—sub Rhodiola if needed.</Text>
+          <Text style={styles.action}>Try the stack tomorrow morning; track mood/energy in journal. Pro unlocks personalized hacks to dominate your peak state.</Text>
         </View>
-
         {/* GREEN PRO BUTTON → OPENS GUMROAD $14.50 LINK */}
         <View style={{ width: '100%', alignItems: 'center', marginTop: 30 }}>
           <TouchableOpacity

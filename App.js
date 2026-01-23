@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,12 +8,84 @@ import {
   TouchableOpacity,
   Image,
   Linking,
+  TextInput,
+  Alert,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
   const currentDate = new Date();
   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   const formattedDate = currentDate.toLocaleDateString('en-US', options);
+
+  const [isPro, setIsPro] = useState(false);
+  const [proKey, setProKey] = useState('');
+  const [customTopic, setCustomTopic] = useState('');
+  const [extraSignal, setExtraSignal] = useState(null);
+
+  useEffect(() => {
+    checkProStatus();
+  }, []);
+
+  const checkProStatus = async () => {
+    try {
+      const key = await AsyncStorage.getItem('proKey');
+      if (key === 'valid_pro_key') { // Mock validation; replace with real check
+        setIsPro(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const validateProKey = async () => {
+    if (proKey === 'testkey') { // Mock key; in real, validate via API or Gumroad webhook
+      await AsyncStorage.setItem('proKey', 'valid_pro_key');
+      setIsPro(true);
+      Alert.alert('Pro Unlocked!', 'Enjoy unlimited features.');
+    } else {
+      Alert.alert('Invalid Key', 'Please check your Pro key from Gumroad.');
+    }
+  };
+
+  const pullFreshSignal = () => {
+    // Mock on-demand signal generation; cycle through predefined or random
+    const mockSignals = [
+      {
+        topic: 'BONUS LEVERAGE',
+        edge: 'Bonus: Scale with delegation—hand off low-leverage tasks.',
+        proof: 'Delegating boosts output 25% (McKinsey data).',
+        action: 'Delegate one task today. Pro for more.',
+      },
+      {
+        topic: 'BONUS MONEY',
+        edge: 'Bonus: ETH layer-2 surge—watch ARB for 2x.',
+        proof: 'Whales accumulating; TVL up 15%.',
+        action: 'Check ARB on DEX. Pro for alerts.',
+      },
+      {
+        topic: 'BONUS PEAK',
+        edge: 'Bonus: Nootropic stack—Lion\'s Mane for cognition.',
+        proof: 'Boosts focus 20% (studies n=1,200).',
+        action: 'Try 500mg daily. Pro for customs.',
+      },
+    ];
+    const randomSignal = mockSignals[Math.floor(Math.random() * mockSignals.length)];
+    setExtraSignal(randomSignal);
+  };
+
+  const generateCustomSignal = () => {
+    if (!customTopic) return Alert.alert('Enter Topic', 'Please enter a custom topic.');
+    // Mock custom generation
+    const custom = {
+      topic: `CUSTOM: ${customTopic.toUpperCase()}`,
+      edge: `Tailored insight for ${customTopic}: Act now to compound.`,
+      proof: 'Based on your input—data-backed edge.',
+      action: 'Apply this; request more in Pro.',
+    };
+    setExtraSignal(custom);
+    setCustomTopic('');
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -21,7 +93,7 @@ export default function App() {
 
         {/* EDGE LOGO */}
         <Image
-          source={require('./assets/edge-logoo.jpg')}  
+          source={require('./assets/edge-logoo.jpg')}  // Assuming fixed
           style={{ width: 340, height: 260, alignSelf: 'center', marginTop: 50 }}
           resizeMode="contain"
         />
@@ -52,6 +124,52 @@ export default function App() {
           <Text style={styles.proof}>Trials (n=5,400) show ashwagandha cuts anxiety 44%, enhancing cognitive output; time at 9 AM IST for peak cortisol alignment. Warning: Consult doc if on meds—sub Rhodiola if needed.</Text>
           <Text style={styles.action}>Try the stack tomorrow morning; track mood/energy in journal. Pro unlocks personalized hacks to dominate your peak state.</Text>
         </View>
+
+        {/* PRO SECTION */}
+        {!isPro ? (
+          <View style={styles.proSection}>
+            <Text style={styles.proHeader}>Unlock Pro Features</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter Pro Key from Gumroad"
+              placeholderTextColor="#888"
+              value={proKey}
+              onChangeText={setProKey}
+            />
+            <TouchableOpacity style={styles.submitButton} onPress={validateProKey}>
+              <Text style={styles.submitText}>Activate Pro</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={styles.proSection}>
+            <Text style={styles.proHeader}>Pro Unlocked!</Text>
+            {/* On-Demand Pull */}
+            <TouchableOpacity style={styles.pullButton} onPress={pullFreshSignal}>
+              <Text style={styles.pullText}>Pull Fresh Signal</Text>
+            </TouchableOpacity>
+            {/* Custom Topic Form */}
+            <TextInput
+              style={styles.input}
+              placeholder="Enter custom topic (e.g., SOL plays)"
+              placeholderTextColor="#888"
+              value={customTopic}
+              onChangeText={setCustomTopic}
+            />
+            <TouchableOpacity style={styles.submitButton} onPress={generateCustomSignal}>
+              <Text style={styles.submitText}>Generate Custom Signal</Text>
+            </TouchableOpacity>
+            {/* Display Extra/Custom Signal */}
+            {extraSignal && (
+              <View style={styles.card}>
+                <Text style={styles.topic}>{extraSignal.topic}</Text>
+                <Text style={styles.edge}>{extraSignal.edge}</Text>
+                <Text style={styles.proof}>{extraSignal.proof}</Text>
+                <Text style={styles.action}>{extraSignal.action}</Text>
+              </View>
+            )}
+          </View>
+        )}
+
         {/* GREEN PRO BUTTON → OPENS GUMROAD $14.50 LINK */}
         <View style={{ width: '100%', alignItems: 'center', marginTop: 30 }}>
           <TouchableOpacity
@@ -90,4 +208,11 @@ const styles = StyleSheet.create({
   proText: { color: '#000', fontSize: 21, fontWeight: '900', textAlign: 'center' },
   proSub: { color: '#000', fontSize: 14, fontWeight: '700', marginTop: 4, textAlign: 'center' },
   footer: { color: '#444', fontSize: 12, marginTop: 60 },
+  proSection: { width: '100%', alignItems: 'center', marginTop: 30, marginBottom: 30 },
+  proHeader: { color: '#00ff88', fontSize: 20, fontWeight: '800', marginBottom: 20 },
+  input: { width: '100%', backgroundColor: '#0f0f0f', color: '#fff', padding: 15, borderRadius: 10, borderWidth: 1, borderColor: '#00ff88', marginBottom: 10 },
+  submitButton: { backgroundColor: '#00ff88', paddingVertical: 15, paddingHorizontal: 40, borderRadius: 20, marginBottom: 20 },
+  submitText: { color: '#000', fontSize: 18, fontWeight: '900' },
+  pullButton: { backgroundColor: '#00ff88', paddingVertical: 15, paddingHorizontal: 40, borderRadius: 20, marginBottom: 20 },
+  pullText: { color: '#000', fontSize: 18, fontWeight: '900' },
 });

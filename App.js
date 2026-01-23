@@ -22,6 +22,9 @@ export default function App() {
   const [proKey, setProKey] = useState('');
   const [customTopic, setCustomTopic] = useState('');
   const [extraSignal, setExtraSignal] = useState(null);
+  const [customBiohack, setCustomBiohack] = useState('');
+
+  const PRODUCT_ID = 'KyFYEAL8LrgQ05InPIQ2w=='; // Your real Gumroad product ID
 
   useEffect(() => {
     checkProStatus();
@@ -30,7 +33,7 @@ export default function App() {
   const checkProStatus = async () => {
     try {
       const key = await AsyncStorage.getItem('proKey');
-      if (key === 'valid_pro_key') { // Mock validation; replace with real check
+      if (key) {
         setIsPro(true);
       }
     } catch (error) {
@@ -39,12 +42,31 @@ export default function App() {
   };
 
   const validateProKey = async () => {
-    if (proKey === 'testkey') { // Mock key; in real, validate via API or Gumroad webhook
-      await AsyncStorage.setItem('proKey', 'valid_pro_key');
-      setIsPro(true);
-      Alert.alert('Pro Unlocked!', 'Enjoy unlimited features.');
-    } else {
-      Alert.alert('Invalid Key', 'Please check your Pro key from Gumroad.');
+    if (!proKey) return Alert.alert('Enter Key', 'Please enter your Pro key from Gumroad.');
+
+    try {
+      const response = await fetch('https://api.gumroad.com/v2/licenses/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          product_id: PRODUCT_ID,
+          license_key: proKey,
+          increment_uses_count: 'true',
+        }).toString(),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        await AsyncStorage.setItem('proKey', proKey);
+        setIsPro(true);
+        Alert.alert('Pro Unlocked!', `Activations used: ${data.uses}. Enjoy unlimited features!`);
+      } else {
+        Alert.alert('Invalid Key', data.message || 'Key not valid or max activations reached. Check your email or contact support.');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Network issue—try again.');
+      console.log(error);
     }
   };
 
@@ -93,7 +115,7 @@ export default function App() {
 
         {/* EDGE LOGO */}
         <Image
-          source={require('./assets/edge-logoo.jpg')}  // Assuming fixed
+          source={require('./assets/edge-logo.jpg')}  // Fixed typo
           style={{ width: 340, height: 260, alignSelf: 'center', marginTop: 50 }}
           resizeMode="contain"
         />
@@ -129,6 +151,7 @@ export default function App() {
         {!isPro ? (
           <View style={styles.proSection}>
             <Text style={styles.proHeader}>Unlock Pro Features</Text>
+            <Text style={styles.proSubHeader}>Get unlimited signals, customs, whale alerts—compound your edge.</Text>
             <TextInput
               style={styles.input}
               placeholder="Enter Pro Key from Gumroad"
@@ -142,21 +165,43 @@ export default function App() {
           </View>
         ) : (
           <View style={styles.proSection}>
-            <Text style={styles.proHeader}>Pro Unlocked!</Text>
-            {/* On-Demand Pull */}
+            <Text style={styles.proHeader}>Pro Unlocked—Let's Compound!</Text>
+            {/* On-Demand Pull - Instant extras users love */}
             <TouchableOpacity style={styles.pullButton} onPress={pullFreshSignal}>
-              <Text style={styles.pullText}>Pull Fresh Signal</Text>
+              <Text style={styles.pullText}>Pull Unlimited Signal</Text>
             </TouchableOpacity>
-            {/* Custom Topic Form */}
+            {/* Customs - Personalized topic gen */}
+            <Text style={styles.proSubHeader}>Custom Topic (e.g., 'SOL alpha')</Text>
             <TextInput
               style={styles.input}
-              placeholder="Enter custom topic (e.g., SOL plays)"
+              placeholder="Enter your custom topic"
               placeholderTextColor="#888"
               value={customTopic}
               onChangeText={setCustomTopic}
             />
             <TouchableOpacity style={styles.submitButton} onPress={generateCustomSignal}>
               <Text style={styles.submitText}>Generate Custom Signal</Text>
+            </TouchableOpacity>
+            {/* Exclusive Whale Alert - ROI hook */}
+            <TouchableOpacity style={styles.pullButton} onPress={() => Alert.alert('Exclusive Whale Alert!', 'LINK whale buy in—long now for 2x? (Real pushes soon)')}>
+              <Text style={styles.pullText}>Get Whale Alert</Text>
+            </TouchableOpacity>
+            {/* Exclusive Biohack Customizer - Performance boost */}
+            <Text style={styles.proSubHeader}>Custom Biohack (e.g., age 30, goal focus)</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter age/goal (e.g., 30, focus)"
+              placeholderTextColor="#888"
+              value={customBiohack}
+              onChangeText={setCustomBiohack}
+            />
+            <TouchableOpacity style={styles.submitButton} onPress={() => {
+              // Mock custom stack based on input
+              const [age, goal] = customBiohack.split(', ').map(s => s.trim());
+              Alert.alert('Your Custom Stack', `For age ${age || 'any'}, goal ${goal || 'general'}: Ashwagandha 300mg + breathwork—boost ${goal || 'focus'} 25%. Track weekly. Pro exclusives rock!`);
+              setCustomBiohack('');
+            }}>
+              <Text style={styles.submitText}>Generate Biohack Stack</Text>
             </TouchableOpacity>
             {/* Display Extra/Custom Signal */}
             {extraSignal && (
@@ -215,4 +260,5 @@ const styles = StyleSheet.create({
   submitText: { color: '#000', fontSize: 18, fontWeight: '900' },
   pullButton: { backgroundColor: '#00ff88', paddingVertical: 15, paddingHorizontal: 40, borderRadius: 20, marginBottom: 20 },
   pullText: { color: '#000', fontSize: 18, fontWeight: '900' },
+  proSubHeader: { color: '#fff', fontSize: 16, fontWeight: '700', marginBottom: 10, textAlign: 'center' },
 });

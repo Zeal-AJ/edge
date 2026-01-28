@@ -24,7 +24,7 @@ export default function App() {
   const [extraSignal, setExtraSignal] = useState(null);
   const [customBiohack, setCustomBiohack] = useState('');
 
-  const PRODUCT_ID = 'KyFYEAL8LrgQ05InPIQ2w=='; // Your real Gumroad product ID
+  const PRODUCT_ID = 'KyI7EAL_8Lrg0Q5InPlQ2w==';// Your real Gumroad product ID
 
   useEffect(() => {
     checkProStatus();

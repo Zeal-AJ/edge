@@ -71,7 +71,6 @@ export default function App() {
   };
 
   const pullFreshSignal = () => {
-    // Mock on-demand signal generation; cycle through predefined or random
     const mockSignals = [
       {
         topic: 'BONUS LEVERAGE',
@@ -98,7 +97,6 @@ export default function App() {
 
   const generateCustomSignal = () => {
     if (!customTopic) return Alert.alert('Enter Topic', 'Please enter a custom topic.');
-    // Mock custom generation
     const custom = {
       topic: `CUSTOM: ${customTopic.toUpperCase()}`,
       edge: `Tailored insight for ${customTopic}: Act now to compound.`,
@@ -115,15 +113,15 @@ export default function App() {
 
         {/* EDGE LOGO */}
         <Image
-          source={require('./assets/edge-logo.jpg')}  // Fixed typo
-          style={{ width: 340, height: 260, alignSelf: 'center', marginTop: 50 }}
+          source={require('./assets/edge-logo.jpg')}
+          style={styles.logo}
           resizeMode="contain"
         />
 
-        {/* TODAY'S DATE — AUTO-UPDATING */}
+        {/* TODAY'S DATE */}
         <Text style={styles.date}>{formattedDate}</Text>
 
-        {/* CARD 1 — LEVERAGE */}
+        {/* DAILY CARDS */}
         <View style={styles.card}>
           <Text style={styles.topic}>LEVERAGE & FIRST PRINCIPLES</Text>
           <Text style={styles.edge}>Networks are the new leverage—build relationships that compound opportunities without your constant input. Focus on high-value connections: One intro can unlock doors forever.</Text>
@@ -131,7 +129,6 @@ export default function App() {
           <Text style={styles.action}>Reach out to one contact today—share value first. Pro unlocks AI-custom network strategies to amplify your leverage.</Text>
         </View>
 
-        {/* CARD 2 — MONEY & POWER */}
         <View style={styles.card}>
           <Text style={styles.topic}>MONEY & POWER</Text>
           <Text style={styles.edge}>BTC rebounding around $89K after dips below $90K, with whales accumulating 450+ BTC daily—signaling support. Hot rotations: LINK up on oracle demand (57% whale holdings spike), LDO gaining 30% in whale stashes for staking plays.</Text>
@@ -139,7 +136,6 @@ export default function App() {
           <Text style={styles.action}>Long LINK futures on Bybit at 0.5x if sub-$20 entry; monitor LDO for staking yields. Pro delivers exclusive whale alerts to power your portfolio.</Text>
         </View>
 
-        {/* CARD 3 — PEAK PERFORMANCE */}
         <View style={styles.card}>
           <Text style={styles.topic}>PEAK PERFORMANCE</Text>
           <Text style={styles.edge}>Stack ashwagandha (300mg) + meditation (10-min breathwork) pre-work for cortisol drop and focus spike—reduces stress 23%, boosts testo 15%. Pair with black coffee for synergy.</Text>
@@ -147,84 +143,98 @@ export default function App() {
           <Text style={styles.action}>Try the stack tomorrow morning; track mood/energy in journal. Pro unlocks personalized hacks to dominate your peak state.</Text>
         </View>
 
-        {/* PRO SECTION */}
+        {/* PRO SECTION - Clean spacing & alignment */}
         {!isPro ? (
           <View style={styles.proSection}>
             <Text style={styles.proHeader}>Unlock Pro Features</Text>
-            <Text style={styles.proSubHeader}>Get unlimited signals, customs, whale alerts—compound your edge.</Text>
+            <Text style={styles.proSubHeader}>Unlimited signals, custom topics, whale alerts, personalized biohacks—compound your edge forever.</Text>
+            <Text style={styles.proInstructions}>Buy on Gumroad → Get key emailed → Enter below (one-time unlock).</Text>
+
+            {/* Buy Pro Button - Below key input for clarity */}
+            <TouchableOpacity
+              style={styles.buyProButton}
+              onPress={() => Linking.openURL('https://edgeaiapp.gumroad.com/l/yxqwgq')}>
+              <Text style={styles.buyProText}>Buy Pro: $29/month</Text>
+              <Text style={styles.buyProSub}>First 100: $14.50 Lifetime (Coupon: FIRST100)</Text>
+            </TouchableOpacity>
+
             <TextInput
               style={styles.input}
-              placeholder="Enter Pro Key from Gumroad"
+              placeholder="Enter your Pro key"
               placeholderTextColor="#888"
               value={proKey}
               onChangeText={setProKey}
             />
-            <TouchableOpacity style={styles.submitButton} onPress={validateProKey}>
-              <Text style={styles.submitText}>Activate Pro</Text>
+            <TouchableOpacity style={styles.actionButton} onPress={validateProKey}>
+              <Text style={styles.buttonText}>Activate Pro Key</Text>
             </TouchableOpacity>
           </View>
         ) : (
           <View style={styles.proSection}>
-            <Text style={styles.proHeader}>Pro Unlocked—Let's Compound!</Text>
-            {/* On-Demand Pull - Instant extras users love */}
-            <TouchableOpacity style={styles.pullButton} onPress={pullFreshSignal}>
-              <Text style={styles.pullText}>Pull Unlimited Signal</Text>
+            <Text style={styles.proHeader}>Pro Unlocked—Compound Now</Text>
+            <View style={styles.separator} />
+
+            {/* On-Demand Pull */}
+            <Text style={styles.proSubHeader}>Unlimited Signals</Text>
+            <TouchableOpacity style={styles.actionButton} onPress={pullFreshSignal}>
+              <Text style={styles.buttonText}>Pull Fresh Signal</Text>
             </TouchableOpacity>
-            {/* Customs - Personalized topic gen */}
-            <Text style={styles.proSubHeader}>Custom Topic (e.g., 'SOL alpha')</Text>
+            <View style={styles.separator} />
+
+            {/* Custom Signal */}
+            <Text style={styles.proSubHeader}>Custom Topic</Text>
+            <Text style={styles.proInstructions}>e.g., 'SOL alpha' or 'exit strategy'</Text>
             <TextInput
               style={styles.input}
-              placeholder="Enter your custom topic"
+              placeholder="Enter custom topic"
               placeholderTextColor="#888"
               value={customTopic}
               onChangeText={setCustomTopic}
             />
-            <TouchableOpacity style={styles.submitButton} onPress={generateCustomSignal}>
-              <Text style={styles.submitText}>Generate Custom Signal</Text>
+            <TouchableOpacity style={styles.actionButton} onPress={generateCustomSignal}>
+              <Text style={styles.buttonText}>Generate Custom Signal</Text>
             </TouchableOpacity>
-            {/* Exclusive Whale Alert - ROI hook */}
-            <TouchableOpacity style={styles.pullButton} onPress={() => Alert.alert('Exclusive Whale Alert!', 'LINK whale buy in—long now for 2x? (Real pushes soon)')}>
-              <Text style={styles.pullText}>Get Whale Alert</Text>
+            <View style={styles.separator} />
+
+            {/* Whale Alert */}
+            <Text style={styles.proSubHeader}>Exclusive Whale Alert</Text>
+            <TouchableOpacity style={styles.actionButton} onPress={() => Alert.alert('Whale Alert', 'LINK whale accumulation—long for potential 2x (real pushes soon)')}>
+              <Text style={styles.buttonText}>Get Latest Alert</Text>
             </TouchableOpacity>
-            {/* Exclusive Biohack Customizer - Performance boost */}
-            <Text style={styles.proSubHeader}>Custom Biohack (e.g., age 30, goal focus)</Text>
+            <View style={styles.separator} />
+
+            {/* Biohack Customizer */}
+            <Text style={styles.proSubHeader}>Custom Biohack Stack</Text>
+            <Text style={styles.proInstructions}>e.g., '30, focus' or '40, testosterone'</Text>
             <TextInput
               style={styles.input}
-              placeholder="Enter age/goal (e.g., 30, focus)"
+              placeholder="Enter age, goal"
               placeholderTextColor="#888"
               value={customBiohack}
               onChangeText={setCustomBiohack}
             />
-            <TouchableOpacity style={styles.submitButton} onPress={() => {
-              // Mock custom stack based on input
-              const [age, goal] = customBiohack.split(', ').map(s => s.trim());
-              Alert.alert('Your Custom Stack', `For age ${age || 'any'}, goal ${goal || 'general'}: Ashwagandha 300mg + breathwork—boost ${goal || 'focus'} 25%. Track weekly. Pro exclusives rock!`);
+            <TouchableOpacity style={styles.actionButton} onPress={() => {
+              const [age, goal] = customBiohack.split(',').map(s => s.trim());
+              Alert.alert('Custom Stack', `Age ${age || 'any'}, goal ${goal || 'general'}: Ashwagandha 300mg + breathwork—boost ${goal || 'focus'} 25%. Track weekly.`);
               setCustomBiohack('');
             }}>
-              <Text style={styles.submitText}>Generate Biohack Stack</Text>
+              <Text style={styles.buttonText}>Generate Stack</Text>
             </TouchableOpacity>
-            {/* Display Extra/Custom Signal */}
+
+            {/* Extra Signal Display */}
             {extraSignal && (
-              <View style={styles.card}>
-                <Text style={styles.topic}>{extraSignal.topic}</Text>
-                <Text style={styles.edge}>{extraSignal.edge}</Text>
-                <Text style={styles.proof}>{extraSignal.proof}</Text>
-                <Text style={styles.action}>{extraSignal.action}</Text>
-              </View>
+              <>
+                <View style={styles.separator} />
+                <View style={styles.card}>
+                  <Text style={styles.topic}>{extraSignal.topic}</Text>
+                  <Text style={styles.edge}>{extraSignal.edge}</Text>
+                  <Text style={styles.proof}>{extraSignal.proof}</Text>
+                  <Text style={styles.action}>{extraSignal.action}</Text>
+                </View>
+              </>
             )}
           </View>
         )}
-
-        {/* GREEN PRO BUTTON → OPENS GUMROAD $14.50 LINK */}
-        <View style={{ width: '100%', alignItems: 'center', marginTop: 30 }}>
-          <TouchableOpacity
-            style={styles.proButton}
-            onPress={() => Linking.openURL('https://edgeaiapp.gumroad.com/l/yxqwgq')}>
-            <Text style={styles.proText}>Unlock Pro: $29/month</Text>
-            <Text style={styles.proSub}>First 100 gets $14.50 Lifetime.</Text>
-            <Text style={styles.proSub}>Use Coupon "FIRST100"</Text>
-          </TouchableOpacity>
-        </View>
 
         <Text style={styles.footer}>Built with love in India · 2026</Text>
       </ScrollView>
@@ -235,6 +245,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#000' },
   scroll: { paddingHorizontal: 20, paddingBottom: 120, alignItems: 'center' },
+  logo: { width: 340, height: 260, alignSelf: 'center', marginTop: 50 },
   date: { fontSize: 14, color: '#666', letterSpacing: 3, marginVertical: 30, textTransform: 'uppercase' },
   card: {
     width: '100%',
@@ -249,16 +260,16 @@ const styles = StyleSheet.create({
   edge: { fontSize: 26, color: '#fff', fontWeight: '800', lineHeight: 36, marginBottom: 12 },
   proof: { fontSize: 15, color: '#888', lineHeight: 24, marginBottom: 12 },
   action: { fontSize: 18, color: '#00ff88', fontWeight: '700', lineHeight: 28 },
-  proButton: { backgroundColor: '#00ff88', paddingVertical: 22, paddingHorizontal: 60, borderRadius: 20 },
-  proText: { color: '#000', fontSize: 21, fontWeight: '900', textAlign: 'center' },
-  proSub: { color: '#000', fontSize: 14, fontWeight: '700', marginTop: 4, textAlign: 'center' },
+  proSection: { width: '100%', alignItems: 'center', marginTop: 40, marginBottom: 40 },
+  proHeader: { color: '#00ff88', fontSize: 22, fontWeight: '800', marginBottom: 20, textAlign: 'center' },
+  proSubHeader: { color: '#fff', fontSize: 18, fontWeight: '700', marginBottom: 10, textAlign: 'center' },
+  proInstructions: { color: '#888', fontSize: 14, marginBottom: 15, textAlign: 'center', lineHeight: 20 },
+  input: { width: '100%', backgroundColor: '#0f0f0f', color: '#fff', padding: 15, borderRadius: 10, borderWidth: 1, borderColor: '#00ff88', marginBottom: 15 },
+  actionButton: { backgroundColor: '#00ff88', paddingVertical: 18, paddingHorizontal: 40, borderRadius: 20, marginBottom: 15, width: '90%' },
+  buttonText: { color: '#000', fontSize: 18, fontWeight: '900', textAlign: 'center' },
+  buyProButton: { backgroundColor: '#00ff88', paddingVertical: 22, paddingHorizontal: 60, borderRadius: 20, marginBottom: 30 },
+  buyProText: { color: '#000', fontSize: 21, fontWeight: '900', textAlign: 'center' },
+  buyProSub: { color: '#000', fontSize: 14, fontWeight: '700', textAlign: 'center' },
+  separator: { height: 1, backgroundColor: '#00ff88', width: '80%', marginVertical: 20, opacity: 0.3 },
   footer: { color: '#444', fontSize: 12, marginTop: 60 },
-  proSection: { width: '100%', alignItems: 'center', marginTop: 30, marginBottom: 30 },
-  proHeader: { color: '#00ff88', fontSize: 20, fontWeight: '800', marginBottom: 20 },
-  input: { width: '100%', backgroundColor: '#0f0f0f', color: '#fff', padding: 15, borderRadius: 10, borderWidth: 1, borderColor: '#00ff88', marginBottom: 10 },
-  submitButton: { backgroundColor: '#00ff88', paddingVertical: 15, paddingHorizontal: 40, borderRadius: 20, marginBottom: 20 },
-  submitText: { color: '#000', fontSize: 18, fontWeight: '900' },
-  pullButton: { backgroundColor: '#00ff88', paddingVertical: 15, paddingHorizontal: 40, borderRadius: 20, marginBottom: 20 },
-  pullText: { color: '#000', fontSize: 18, fontWeight: '900' },
-  proSubHeader: { color: '#fff', fontSize: 16, fontWeight: '700', marginBottom: 10, textAlign: 'center' },
 });
